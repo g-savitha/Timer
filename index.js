@@ -13,12 +13,25 @@ class Timer {
     this.intervalId = setInterval(this.tick, 1000);
   };
   tick = () => {
-    const timeRemaining = parseFloat(this.durationInput.value);
-    this.durationInput.value = timeRemaining - 1;
+    //automatically invokes the getter function even though we dont have paranthesis at end.
+    //treats it as instance variable, coz of 'get' keyword
+    // const timeRemaining = this.timeRemaining;
+    // this.timeRemaining = timeRemaining - 1;
+    //in short
+    this.timeRemaining = this.timeRemaining - 1; //left side one calls setter, right side one calls getter;
   };
   pause = () => {
     clearInterval(this.intervalId);
   };
+  //getter
+  get timeRemaining() {
+    return parseFloat(this.durationInput.value);
+  }
+  //setter
+  //time = the value which we provide to set, here timeRemaining - 1;
+  set timeRemaining(time) {
+    this.durationInput.value = time;
+  }
 }
 
 const durationInput = document.querySelector("#duration");
