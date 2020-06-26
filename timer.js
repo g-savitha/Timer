@@ -14,10 +14,11 @@ class Timer {
   }
   start = () => {
     if (this.onStart) {
-      this.onStart();
+      this.onStart(this.timeRemaining);
     }
     this.tick;
-    this.intervalId = setInterval(this.tick, 1000);
+    //for a smoother animation, run it for every 50ms
+    this.intervalId = setInterval(this.tick, 20);
   };
   tick = () => {
     //stop the timer when it hits 0, else continue
@@ -25,9 +26,9 @@ class Timer {
       this.pause();
       if (this.onComplete) this.onComplete();
     } else {
-      this.timeRemaining = this.timeRemaining - 1;
+      this.timeRemaining = this.timeRemaining - 0.02;
       if (this.onTick) {
-        this.onTick();
+        this.onTick(this.timeRemaining);
       }
     }
   };
@@ -38,6 +39,6 @@ class Timer {
     return parseFloat(this.durationInput.value);
   }
   set timeRemaining(time) {
-    this.durationInput.value = time;
+    this.durationInput.value = time.toFixed(2); //rounds the decimal to 2 decimal places
   }
 }
